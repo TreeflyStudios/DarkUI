@@ -14,20 +14,3 @@ Special thanks to the team over at [Ascension Game Dev](https://www.ascensiongam
 The best way to learn how to use DarkUI is to check out the Example project included with the source code. It'll show you how to use the majority of the forms, controls, and docking components.
 
 You can also read the [GitHub project wiki](https://github.com/RobinPerris/DarkUI/wiki). This contains all the information you need to get started as well as more detailed information and guides.
-
-### Screenshots
-Game map editor
-
-![Game map editor](http://www.darkui.com/images/editor.png)
-
-Lua script editor
-
-![Lua script editor](http://www.darkui.com/images/lua.png)
-
-Example docking application
-
-![Example docking application](http://www.darkui.com/images/docking.png)
-
-Controls preview
-
-![Controls preview](http://www.darkui.com/images/controls.png)
