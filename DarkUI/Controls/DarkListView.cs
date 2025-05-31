@@ -380,7 +380,7 @@ namespace DarkUI.Controls
         {
             using (var g = CreateGraphics())
             {
-                for (var i = 0; i <= Items.Count; i++)
+                for (var i = 0; i < Items.Count; i++)
                 {
                     var item = Items[i];
                     UpdateItemSize(item, g);

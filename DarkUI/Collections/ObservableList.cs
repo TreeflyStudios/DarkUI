@@ -51,15 +51,7 @@ namespace DarkUI.Collections
         {
             get
             {
-                _lock.EnterReadLock();
-                try
-                {
-                    return _innerList.Count;
-                }
-                finally
-                {
-                    _lock.ExitReadLock();
-                }
+                return _innerList.Count;
             }
         }
 
@@ -837,17 +829,9 @@ namespace DarkUI.Collections
 
         private T GetItem(int index)
         {
-            _lock.EnterReadLock();
-            try
-            {
-                CheckDisposed();
-                ValidateIndex(index);
-                return _innerList[index];
-            }
-            finally
-            {
-                _lock.ExitReadLock();
-            }
+            CheckDisposed();
+            ValidateIndex(index);
+            return _innerList[index];
         }
 
         private void SetItem(int index, T value) // This is for this[index] = value
@@ -1162,9 +1146,6 @@ namespace DarkUI.Collections
 
                     _undoStack?.Clear();
                     _redoStack?.Clear();
-                    // _innerList?.Clear(); // Optional: whether to clear data on dispose. Current code preserves it.
-
-                    _lock?.Dispose(); // Dispose the lock itself
                 }
                 finally
                 {
@@ -1178,9 +1159,6 @@ namespace DarkUI.Collections
         }
 
         #endregion
-
-        // Removed Getters for Fields region as most are covered by public properties or methods like GetInnerListCopy()
-        // _updateCount and _hasChanges are internal implementation details.
     }
 
     #region Supporting Classes & Enums
