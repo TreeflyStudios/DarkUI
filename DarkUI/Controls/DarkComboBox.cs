@@ -1,5 +1,4 @@
 ﻿using DarkUI.Config;
-using DarkUI.Icons;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -95,14 +94,34 @@ namespace DarkUI.Controls
             PaintCombobox();
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            _buffer = null;
+            Invalidate();
+        }
+        
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            _buffer = null;
+            Invalidate();
+        }
+
         private void PaintCombobox()
         {
+            if (ClientRectangle.Width <= 0 || ClientRectangle.Height <= 0)
+                _buffer = new Bitmap(1, 1);
             if (_buffer == null)
                 _buffer = new Bitmap(ClientRectangle.Width, ClientRectangle.Height);
 
             using (var g = Graphics.FromImage(_buffer))
             {
                 var rect = new Rectangle(0, 0, ClientSize.Width, ClientSize.Height);
+                
+                var textColor = Enabled
+                    ? Colors.LightText
+                    : Colors.DisabledText;
 
                 var textColor = ThemeProvider.Theme.Colors.LightText;
                 var borderColor = ThemeProvider.Theme.Colors.GreySelection;

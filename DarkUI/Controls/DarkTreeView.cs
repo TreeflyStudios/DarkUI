@@ -2,7 +2,6 @@
 using DarkUI.Config;
 using DarkUI.Extensions;
 using DarkUI.Forms;
-using DarkUI.Icons;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -566,6 +565,8 @@ namespace DarkUI.Controls
             if (IsDragging)
                 return;
 
+            ContentSize = new Size(0, 0);
+
             if (Nodes.Count == 0)
                 return;
 
@@ -573,10 +574,8 @@ namespace DarkUI.Controls
             var isOdd = false;
             var index = 0;
             DarkTreeNode prevNode = null;
-
-            ContentSize = new Size(0, 0);
-
-            for (var i = 0; i <= Nodes.Count - 1; i++)
+            
+            for (var i = 0; i <= Nodes.Count; i++)
             {
                 var node = Nodes[i];
                 UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref index);
@@ -1268,10 +1267,33 @@ namespace DarkUI.Controls
             }
 
             // 5. Draw child nodes
+            DrawChildNodes(node, g);
+            
+        }
+        
+        /// <summary>
+        /// Recursively paints only the nodes and child nodes within the viewport.
+        /// </summary>
+        private void DrawChildNodes(DarkTreeNode node, Graphics g)
+        {
             if (node.Expanded)
             {
                 foreach (var childNode in node.Nodes)
-                    DrawNode(childNode, g);
+                {
+
+                    if (childNode.Expanded)
+                        DrawChildNodes(childNode, g);
+
+                    bool isInTopView = Viewport.Top <= childNode.FullArea.Y;  
+                    bool isWithin = childNode.FullArea.Y < Viewport.Top + Viewport.Height;
+                    bool isPastBottomView = childNode.FullArea.Y > Viewport.Top + Viewport.Height;
+
+                    if (isInTopView && isWithin)
+                        DrawNode(childNode, g);
+
+                    if (isPastBottomView)
+                        break;
+                }
             }
         }
 
