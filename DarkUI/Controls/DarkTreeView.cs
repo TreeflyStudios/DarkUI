@@ -2,7 +2,6 @@
 using DarkUI.Config;
 using DarkUI.Extensions;
 using DarkUI.Forms;
-using DarkUI.Icons;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -576,7 +575,7 @@ namespace DarkUI.Controls
             var index = 0;
             DarkTreeNode prevNode = null;
             
-            for (var i = 0; i <= Nodes.Count - 1; i++)
+            for (var i = 0; i <= Nodes.Count; i++)
             {
                 var node = Nodes[i];
                 UpdateNode(node, ref prevNode, 0, ref yOffset, ref isOdd, ref index);
